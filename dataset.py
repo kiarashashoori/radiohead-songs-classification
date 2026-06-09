@@ -1,6 +1,11 @@
 from parameters import Parameters as p
 from pydub import AudioSegment
 import os
+import logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(message)s"
+)
 
 
 class ExtractDataset():
@@ -8,8 +13,8 @@ class ExtractDataset():
         self.music_path = p.music_path
         self.dataset_path = p.dataset_path
 
-        self.each_clip_dur = 10000
-        self.between_clip_dur = 10000
+        self.each_clip_dur = 5000
+        self.between_clip_dur = 5000
 
         self.music_classes = os.listdir(self.music_path)
     
@@ -18,8 +23,10 @@ class ExtractDataset():
         for music in self.music_classes:
             if not music.endswith(p.music_formats):
                 self.music_classes.remove(music)
+                logging.info(f"unkown file '{music}'")
                 continue
             os.mkdir(p.dataset_path+music[:len(music)-4])
+            logging.info(f"directory for '{music[:len(music)-4]}' class created")
     
     def clip_audios(self):
 
@@ -32,7 +39,8 @@ class ExtractDataset():
                 clipped = audio[start_time:end_time]
                 output_path = self.dataset_path+file[:len(file)-4]+'/'
                 clipped.export(output_path+str(i), format='mp3')
+            logging.info(f"{i} labels created for '{file[:len(file)-4]}' class")
 
 dataset = ExtractDataset()
-dataset.create_music_folder()
+# dataset.create_music_folder()
 dataset.clip_audios()
