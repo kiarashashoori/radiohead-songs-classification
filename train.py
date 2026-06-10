@@ -40,10 +40,8 @@ class Train():
             TimeStretch(min_rate=0.8, max_rate=1.2),
             PitchShift(min_semitones=-4, max_semitones=4),
             ], p=0.8, shuffle=True)
-        # augmentation
             audio = audio_augmentations(samples=audio, sample_rate=16000)
 
-        # AST feature extraction (THIS IS CRITICAL)
         inputs = self.feature_extractor(
             audio,
             sampling_rate=16000
@@ -115,6 +113,6 @@ class Train():
         )
 
         trainer.train()
-
-train = Train()
-train.training()
+if __name__ == '__main__':
+    train = Train()
+    train.training()
