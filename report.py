@@ -1,5 +1,6 @@
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_recall_fscore_support
+from sklearn.metrics import accuracy_score
 from sklearn.metrics import ConfusionMatrixDisplay
 from transformers import ASTConfig,ASTForAudioClassification
 from transformers import AutoFeatureExtractor
@@ -29,6 +30,7 @@ class ModelReport():
         self.device = torch.device(
             "cuda" if torch.cuda.is_available() else "cpu"
         )
+        
 
         self.model = ASTForAudioClassification.from_pretrained(
             p.model_path
@@ -119,8 +121,10 @@ class ModelReport():
 
         plt.tight_layout()
         plt.savefig("result/class_metrics.png")
+        acc = accuracy_score(y_true,y_pred)
+        print(f'accuracy : {acc}')
 
 report = ModelReport()
-report.generate_confusion_matrix()
+report.generate_results()
 
 
