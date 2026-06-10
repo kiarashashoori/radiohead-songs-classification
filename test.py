@@ -23,7 +23,7 @@ device = torch.device(
 )
 
 model = ASTForAudioClassification.from_pretrained(
-    "ast-radiohead/checkpoint-1196"
+    p.model_path
 )
 model.to(device)
 
