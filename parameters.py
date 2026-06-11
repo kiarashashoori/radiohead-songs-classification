@@ -2,7 +2,8 @@ class Parameters():
 
     music_path = 'music/'
     dataset_path = 'dataset/'
-    music_formats = ('mp3','m4a')
+    music_formats = ('mp3','m4a','wav')
+    record_path ='records/'
     model_path = 'ast-radiohead/checkpoint-1196'
 
 
